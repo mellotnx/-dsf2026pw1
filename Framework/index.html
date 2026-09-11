@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplo 1 - Tailwind CSS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+  <nav class="bg-blue-600 text-white p-4 shadow-md">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold">Projeto com Tailwind</h1>
+      
+      <button id="tw-menu-btn" class="md:hidden text-2xl focus:outline-none">&#9776;</button>
+      
+      <div class="hidden md:flex space-x-6">
+        <a href="#tabela" class="hover:underline">Tabela</a>
+        <a href="#galeria" class="hover:underline">Galeria</a>
+        <a href="#formulario" class="hover:underline">Contato</a>
+      </div>
+    </div>
+
+    <div id="tw-mobile-menu" class="hidden md:hidden flex flex-col space-y-2 mt-4 border-t border-blue-500 pt-2">
+      <a href="#tabela" class="hover:bg-blue-700 p-2 rounded">Tabela</a>
+      <a href="#galeria" class="hover:bg-blue-700 p-2 rounded">Galeria</a>
+      <a href="#formulario" class="hover:bg-blue-700 p-2 rounded">Contato</a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto p-4 space-y-8 my-6">
+
+    <section id="tabela" class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-bold mb-4 text-blue-600">1. Tabela de Usuários</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-gray-100 border-b">
+              <th class="p-3">Nome</th>
+              <th class="p-3">E-mail</th>
+              <th class="p-3">Cargo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b hover:bg-gray-50">
+              <td class="p-3">Ana Silva</td>
+              <td class="p-3">ana@email.com</td>
+              <td class="p-3">Desenvolvedora</td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50">
+              <td class="p-3">Carlos Oliveira</td>
+              <td class="p-3">carlos@email.com</td>
+              <td class="p-3">Designer</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="galeria" class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-bold mb-4 text-blue-600">2. Galeria de Imagens</h2>
+      <div class="relative max-w-lg mx-auto overflow-hidden rounded-lg">
+        <div id="tw-carousel" class="flex transition-transform duration-500">
+          <img src="https://picsum.photos/600/300?random=1" alt="Imagem 1" class="w-full flex-shrink-0">
+          <img src="https://picsum.photos/600/300?random=2" alt="Imagem 2" class="w-full flex-shrink-0">
+          <img src="https://picsum.photos/600/300?random=3" alt="Imagem 3" class="w-full flex-shrink-0">
+        </div>
+        <button id="tw-prev" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full">&#10094;</button>
+        <button id="tw-next" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full">&#10095;</button>
+      </div>
+    </section>
+
+    <section id="formulario" class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
+      <h2 class="text-xl font-bold mb-4 text-blue-600">3. Formulário de Contato</h2>
+      <form class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Nome:</label>
+          <input type="text" class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">E-mail:</label>
+          <input type="email" class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none" required>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Enviar</button>
+      </form>
+    </section>
+
+    <div class="text-center">
+      <button id="tw-open-modal" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition">
+        Abrir Modal
+      </button>
+    </div>
+
+    <div id="tw-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4">
+      <div class="bg-white rounded-lg p-6 max-w-sm w-full shadow-lg">
+        <h3 class="text-lg font-bold mb-2">Exemplo de Modal</h3>
+        <p class="text-gray-600 mb-4">Esta janela modal foi feita com Tailwind CSS e JavaScript.</p>
+        <button id="tw-close-modal" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">Fechar</button>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Menu Mobile
+    const menuBtn = document.getElementById("tw-menu-btn");
+    const mobileMenu = document.getElementById("tw-mobile-menu");
+    menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+
+    // Carrossel
+    const carousel = document.getElementById("tw-carousel");
+    const prevBtn = document.getElementById("tw-prev");
+    const nextBtn = document.getElementById("tw-next");
+    let index = 0;
+
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    nextBtn.addEventListener("click", () => {
+      index = (index + 1) % carousel.children.length;
+      updateCarousel();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      index = (index - 1 + carousel.children.length) % carousel.children.length;
+      updateCarousel();
+    });
+
+    // Modal
+    const modal = document.getElementById("tw-modal");
+    document.getElementById("tw-open-modal").addEventListener("click", () => modal.classList.remove("hidden"));
+    document.getElementById("tw-close-modal").addEventListener("click", () => modal.classList.add("hidden"));
+  </script>
+</body>
+</html>
